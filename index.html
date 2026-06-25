@@ -70,10 +70,11 @@
         position: fixed; bottom: 0; left: 0; right: 0; background: var(--base02);
         box-shadow: 0 -4px 16px rgba(0,0,0,0.4); z-index: 9999;
         border-top: 1px solid var(--base01); padding: 10px 16px;
+        overflow: hidden; width: 100%; box-sizing: border-box;
     }
-    .dock-summary { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-    .dock-summary text { font-size: 14px; font-weight: bold; color: var(--base2); }
-    .dock-btn-group { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; justify-content: flex-end; min-width: 0; }
+    .dock-summary { display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 8px; }
+    .dock-summary-count { font-size: 12px; color: var(--base1); white-space: nowrap; flex-shrink: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+    .dock-btn-group { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: nowrap; }
     .dock-toggle-btn, .layout-toggle-btn {
         background: var(--blue); color: white; border: none; padding: 7px 10px;
         border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer;
@@ -81,16 +82,16 @@
     }
     .layout-toggle-btn { background: var(--magenta); }
     .dock-columns-btn  { background: var(--cyan); }
-    .dock-content { display: none; margin-top: 12px; max-height: 70vh; overflow-y: auto; }
+    .dock-content { display: none; margin-top: 12px; max-height: 70vh; overflow-y: auto; width: 100%; }
     .dock-content.open { display: block; }
 
     /* Reusable Form Grid Elements inside filters */
     .filter-bar { display: flex; flex-direction: column; gap: 12px; }
     .filter-inputs-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
-    .filter-group { display: flex; flex-direction: column; }
+    .filter-group { display: flex; flex-direction: column; min-width: 0; }
     .filter-group label { font-size: 10px; text-transform: uppercase; color: var(--base1); margin-bottom: 2px; }
     .filter-group input { padding: 8px; border-radius: 4px; border: 1px solid var(--base01); background: var(--base03); color: var(--base2); font-size: 14px; }
-    .filter-group select { padding: 8px; border-radius: 4px; border: 1px solid var(--base01); background: var(--base03); color: var(--base2); font-size: 14px; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23839496'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+    .filter-group select { padding: 8px; border-radius: 4px; border: 1px solid var(--base01); background: var(--base03); color: var(--base2); font-size: 14px; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23839496'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; width: 100%; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
     .filter-group select:focus { outline: none; border-color: var(--cyan); }
 
     .toggle-grid-panel { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; padding-top: 8px; border-top: 1px dashed var(--base03); }
@@ -120,8 +121,8 @@
     ------------------------------------ */
 
     /* === CARD MODE (default) === */
-    body:not(.force-desktop) { padding: 12px 12px 100px 12px; }
-    body:not(.force-desktop) .table-container { border: none; overflow-x: visible; width: 100%; }
+    body:not(.force-desktop) { padding: 12px 12px 100px 12px; overflow-x: hidden; }
+    body:not(.force-desktop) .table-container { border: none; overflow-x: hidden; width: 100%; }
     body:not(.force-desktop) table { width: 100%; }
     body:not(.force-desktop) table,
     body:not(.force-desktop) thead,
@@ -2016,7 +2017,7 @@
 
 <div class="mobile-dock">
     <div class="dock-summary">
-        <div><span style="color:var(--base1)">Items:</span> <span id="f-count">0</span> / 127</div>
+        <div class="dock-summary-count"><span style="color:var(--base1)">Items:</span> <span id="f-count">0</span> / 127</div>
         <div class="dock-btn-group">
             <button type="button" class="layout-toggle-btn" id="layout-toggle-btn" onclick="toggleLayout()">🖥️ Desktop</button>
             <button type="button" class="dock-columns-btn dock-toggle-btn" id="dock-columns-btn" onclick="togglePanel('dock-columns-content', 'dock-filters-content')">⊞ Columns</button>
